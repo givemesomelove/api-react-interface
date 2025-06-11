@@ -2,6 +2,7 @@
 import React from 'react';
 import Register from './register';
 import Login from './login';
+import Find from './find';
 
 const UserPage = () => {
   return (
@@ -15,6 +16,7 @@ const UserPage = () => {
     }}>
       <Register />
       <Login />
+      <Find />
     </div>
   );
 };

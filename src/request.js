@@ -12,20 +12,40 @@ export const fetchResLog = async (response) => {
   const clonedResponse = response.clone();
   const responseText = await clonedResponse.text();
 
+  let str = ""
   if (response.ok) {
-    let str = "请求成功\n";
+    str += "请求成功\n";
     str += "url:" + response.url + "\n";
     str += "状态码：" + response.status + "\n";
     /// 返回的json字符串
     str += "返回数据：" + responseText;
-    return str;
   } else {
-    let str = "请求失败\n";
+    str += "请求失败\n";
     str += "url:" + response.url + "\n";
     str += "状态码：" + response.status + "\n";
     str += "错误信息：" + responseText;
-    return str;
   }
+  return str;
+};
+
+/// 返回结果json
+export const fetchJson = async (response) => {
+  if (!response || response.constructor.name !== "Response")
+    return "response发生了错误";
+
+  // 克隆响应以允许重复读取body
+  const clonedResponse = response.clone();
+  const responseText = await clonedResponse.text();
+
+  let json = null;
+  if (response.ok) {
+    try {
+      json = JSON.parse(responseText);
+    } catch (e) {
+      console.error("response解析json失败", e);
+    }
+  }
+  return json;
 };
 
 /**
@@ -46,10 +66,19 @@ export const fetchGet = async (path, params = {}, token) => {
     ...(token && { Authorization: `Bearer ${token}` }),
   };
 
-  return await fetch(url.toString(), {
+  const response = await fetch(url.toString(), {
     method: "GET",
     headers,
   });
+
+  const success = fetchSuccess(response);
+  const resLog = await fetchResLog(response);
+  const json = await fetchJson(response);
+  return {
+    success,
+    resLog,
+    json,
+  };
 };
 
 /**
@@ -75,8 +104,10 @@ export const fetchPost = async (path, body = {}, token) => {
 
   const success = fetchSuccess(response);
   const resLog = await fetchResLog(response);
+  const json = await fetchJson(response);
   return {
     success,
     resLog,
+    json,
   }
 };
