@@ -1,21 +1,34 @@
-const { io } = require('socket.io-client');
+import { io } from 'socket.io-client';
 
 class IO {
     constructor() {
+        this.isConnected = false;
+        this.state = "准备连接";
         this.socket = io('http://localhost:3000/room');
 
-        socket.on("connect", () => {
+        this.socket.on("connect", () => {
             console.log("ws连接成功");
-            
+            this.isConnected = true;
+            this.state = "连接成功";
+            /// 通知所有js连接成功
+            const event = new CustomEvent('connect', {});
+            document.dispatchEvent(event);
         });
 
-        socket.on("message", (data) => {
+        this.socket.on("message", (data) => {
             console.log("Received:", data);
+
+            // const event = new CustomEvent('message', data);
+            // document.dispatchEvent(event);
         });
 
-        socket.on("connect_error", (err) => {
+        this.socket.on("connect_error", (err) => {
             console.log("Connection failed:", err.message);
-            process.exit(1);
+            this.isConnected = true;
+            this.state = "断开连接";
+            /// 通知所有js连接成功
+            const event = new CustomEvent('disconnect', {});
+            document.dispatchEvent(event);
         });
     }
 
@@ -31,5 +44,5 @@ class IO {
 
 
 }
-
-module.exports = IO.getInstance();
+const instance = IO.getInstance();
+export default instance;
