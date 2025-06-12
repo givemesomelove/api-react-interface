@@ -10,6 +10,12 @@ const PAGE_CONFIG = [
     component: lazy(() => import('./pages/userPage'))
   },
   {
+    id: 'room',
+    title: '房间管理',
+    path: '/room',
+    component: lazy(() => import('./pages/roomPage'))
+  },
+  {
     id: 'settings',
     title: '设置页面',
     path: '/settings'
