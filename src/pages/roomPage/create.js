@@ -11,9 +11,12 @@ const Create = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    io.socket.emit('message', {
-      userId: formData.userId
-    });
+    const userData = {
+      id: formData.userId,
+      username: "新用户",
+      avatar: 0,
+    }
+    io.sendMessage("createRoom", { userData })
   };
 
   return (

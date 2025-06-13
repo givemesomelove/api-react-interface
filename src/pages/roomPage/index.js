@@ -1,25 +1,33 @@
 
 import React, { useState, useEffect } from 'react';
 import Create from './create';
+import FindAll from './findAll';
+import Join from './join';
+import Clear from './clear';
 import io from '../../io';
 import { FloatingWindow } from '../../common/commonUI'; 
 
-const RoomPage = () => {
-
-  const [state, setState] = useState(io.state);
+const useIoState = () => {
+  const [state, setState] = useState(io.stateStr())
+  
+  const handleStateUpdate = () => {
+    console.log("收到通知：", io.stateStr());
+    setState(io.stateStr());
+  };
 
   useEffect(() => {
-    const handleConnect = () => setState(io.state);
-    const handleDisconnect = () => setState(io.state);
-
-    document.addEventListener('connect', handleConnect);
-    document.addEventListener('disconnect', handleDisconnect);
-
+    handleStateUpdate();
+    document.addEventListener('connectStateUpdate', handleStateUpdate);
     return () => {
-      document.removeEventListener('connect', handleConnect);
-      document.removeEventListener('disconnect', handleDisconnect);
+      document.removeEventListener('connectStateUpdate', handleStateUpdate);
     };
-  }, []);
+  }, [])
+
+  return state;
+}
+
+const RoomPage = () => {
+  const state = useIoState();
 
   return (
     <div style={{
@@ -31,7 +39,10 @@ const RoomPage = () => {
       gap: '20px'
     }}>
       <FloatingWindow title={state}/>
+      <FindAll />
       <Create />
+      <Join />
+      <Clear />
     </div>
   );
 };
