@@ -4,15 +4,15 @@ import Create from './create';
 import FindAll from './findAll';
 import Join from './join';
 import Clear from './clear';
-import io from '../../io';
+import roomWs from '../../roomWs';
 import { FloatingWindow } from '../../common/commonUI'; 
 
 const useIoState = () => {
-  const [state, setState] = useState(io.stateStr())
+  const [state, setState] = useState(roomWs.stateStr())
   
   const handleStateUpdate = () => {
-    console.log("收到通知：", io.stateStr());
-    setState(io.stateStr());
+    console.log("收到通知：", roomWs.stateStr());
+    setState(roomWs.stateStr());
   };
 
   useEffect(() => {

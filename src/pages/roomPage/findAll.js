@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { fetchPost } from "../../request";
 import { ResponseMessage, FetchSquare, InputLab, FetchBtn } from "../../common/commonUI";
-import io from '../../io';
+import roomWs from '../../roomWs';
 
 const useIoState = () => {
     const [state, setState] = useState("")
@@ -22,7 +22,7 @@ const useIoState = () => {
             }
         };
 
-        io.sendMessage("getAllRooms", {}, block);
+        roomWs.sendMessage("getAllRooms", {}, block);
     };
 
     useEffect(() => {

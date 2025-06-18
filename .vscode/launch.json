@@ -5,9 +5,9 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "command": "PORT=3001 npm start",
+            // "command": "PORT=3001 npm start",
             /// windows 端口3001
-            // "command": "cmd /c \"set PORT=3001 && npm start\"",
+            "command": "cmd /c \"set PORT=3001 && npm start\"",
             "name": "端口3001启动",
             "request": "launch",
             "type": "node-terminal"

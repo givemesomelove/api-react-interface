@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { fetchPost } from "../../request";
 import { ResponseMessage, FetchSquare, InputLab, FetchBtn } from "../../common/commonUI";
-import io from '../../io';
+import roomWs from '../../roomWs';
 
 const Clear = () => {
     const onClick = () => {
-        io.sendMessage("clearRooms", {});
+        roomWs.sendMessage("clearRooms", {});
     }
 
     return (

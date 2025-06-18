@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { fetchPost } from "../../request";
 import { ResponseMessage, FetchSquare, InputLab, FetchBtn } from "../../common/commonUI";
-import io from '../../io';
+import roomWs from '../../roomWs';
 
 const Create = () => {
   const [formData, setFormData] = useState({
@@ -16,7 +15,7 @@ const Create = () => {
       username: "新用户",
       avatar: 0,
     }
-    io.sendMessage("createRoom", { userData })
+    roomWs.sendMessage("createRoom", { userData })
   };
 
   return (

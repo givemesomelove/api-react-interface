@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { fetchPost } from "../../request";
 import { ResponseMessage, FetchSquare, InputLab, FetchBtn } from "../../common/commonUI";
-import io from '../../io';
+import roomWs from '../../roomWs';
 
 const Join = () => {
 
@@ -25,7 +25,7 @@ const Join = () => {
             avatar: 0,
         }
 
-        io.sendMessage("joinRoom", { roomId, userData }, (response) => {
+        roomWs.sendMessage("joinRoom", { roomId, userData }, (response) => {
             const { success } = response;
             const resLog = success? "加入房间成功" : `加入房间失败:${response.message}`;
             setResponseData({
