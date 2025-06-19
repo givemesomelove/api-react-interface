@@ -11,7 +11,7 @@ const Create = () => {
     e.preventDefault();
 
     const userData = {
-      id: formData.userId,
+      _id: formData.userId,
       username: "新用户",
       avatar: 0,
     }

@@ -26,11 +26,11 @@ const Join = () => {
         }
 
         roomWs.sendMessage("joinRoom", { roomId, userData }, (response) => {
-            const { success } = response;
-            const resLog = success? "加入房间成功" : `加入房间失败:${response.message}`;
+            const { code } = response;
+            const resLog = code == 0? "加入房间成功" : `加入房间失败:${response.message}`;
             setResponseData({
                 ...responseData,
-                success,
+                success: code == 0,
                 resLog,
             });
         });

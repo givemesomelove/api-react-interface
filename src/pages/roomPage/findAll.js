@@ -10,14 +10,14 @@ const useIoState = () => {
         console.log("房间刷新");
 
         const block = (response) => {
-            const { success } = response;
-            if (!success) {
+            const { code } = response;
+            if (code != 0) {
                 setState(response.data.message)
             } else {
-                const { roomList, roomPlayerList, success } = response.data;
+                const { roomList, roomPlayers } = response.data;
 
                 const roomStr = roomList.map(obj => JSON.stringify(obj)).join("\n\n");
-                const playerStr = roomPlayerList.map(obj => JSON.stringify(obj)).join("\n\n");
+                const playerStr = roomPlayers.map(obj => JSON.stringify(obj)).join("\n\n");
                 setState(`房间列表:\n${roomStr}\n\n玩家列表:\n${playerStr}`)
             }
         };
