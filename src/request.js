@@ -37,7 +37,7 @@ export const fetchJson = async (response) => {
   const clonedResponse = response.clone();
   const responseText = await clonedResponse.text();
 
-  let json = null;
+  let json = {};
   if (response.ok) {
     try {
       json = JSON.parse(responseText);
